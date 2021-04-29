@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: SAM Template for gen-conf-talks-etl
+
+Parameters:
+  TOKEN_ENDPOINT:
+    Type: String
+  CLIENT_SECRET:
+    Type: String
+  CLIENT_ID:
+    Type: String
+  CHURCH_API:
+    Type: String
+
+Globals:
+  Function:
+    Timeout: 60
+    Environment:
+      Variables:
+        TOKEN_ENDPOINT: !Ref TOKEN_ENDPOINT
+        CLIENT_SECRET: !Ref CLIENT_SECRET
+        CLIENT_ID: !Ref CLIENT_ID
+        CHURCH_API: !Ref CHURCH_API
+
+Resources:
+  GenConfTalksEtlFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: src/
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+
+Outputs:
+  GenConfTalksEtlFunction:
+    Description: "Gen Conf ETL Lambda Function ARN"
+    Value: !GetAtt GenConfTalksEtlFunction.Arn
+  GenConfTalksEtlFunctionIamRole:
+    Description: "Implicit IAM Role created for the function"
+    Value: !GetAtt GenConfTalksEtlFunctionRole.Arn
