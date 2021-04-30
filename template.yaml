@@ -37,19 +37,19 @@ Resources:
       Handler: app.lambdaHandler
       Runtime: nodejs14.x
       Policies:
-      - DynamoDBCrudPolicy:
-          TableName:
-            !Ref genConfTableName
-      - SQSPollerPolicy:
-          QueueName:
-            !Ref queueName
+        - DynamoDBCrudPolicy:
+            TableName:
+              !Ref genConfTableName
+        - SQSPollerPolicy:
+            QueueName:
+              !Ref queueName
       Events:
         SQSEvent:
-        Type: SQS
-        Properties:
-          Queue: !Ref queueArn
-          BatchSize: 10
-          Enabled: true
+          Type: SQS
+          Properties:
+            Queue: !Ref queueArn
+            BatchSize: 10
+            Enabled: true
 
 Outputs:
   GenConfTalksEtlFunction:
