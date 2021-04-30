@@ -28,11 +28,12 @@ exports.lambdaHandler = async (event, context) => {
             source: 'GenConfContentPipeline'
         }
 
-        await saveOnDynamoDB(talkObject);
+        const dynamoResponse = await saveOnDynamoDB(talkObject);
+        console.log(dynamoResponse);
 
         const response = {
             statusCode: 200,
-            body: JSON.stringify(talkObject)
+            body: JSON.stringify(dynamoResponse)
         }
         return response
     } catch (err) {
