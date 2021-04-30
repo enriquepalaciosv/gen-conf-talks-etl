@@ -5,13 +5,17 @@ const { getSession, getTalkOrder, cleanUri, formatTitle, createSynonym, formatAu
 
 exports.lambdaHandler = async (event, context) => {
     try {
+        console.log('event', event);
         const { Records } = event;
         const savedTalks = []
         const uris = [];
 
         for (const r of Records) {
             const body = JSON.parse(r.body);
-            if (body.event === "PUBLISH" && body.context === "general-conference") {
+            console.log('body', body);
+            const message = JSON.parse(body.Message)
+            console.log('message', message);
+            if (message.headers.event === "PUBLISH" && message.headers.context === "general-conference") {
                 uris.push(body.uri);
             }
         }

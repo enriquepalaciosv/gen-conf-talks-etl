@@ -13,6 +13,10 @@ Parameters:
     Type: String
   genConfTableName:
     Type: String
+  queueName:
+    Type: String
+  queueArn:
+    Type: String
 
 Globals:
   Function:
@@ -36,6 +40,16 @@ Resources:
       - DynamoDBCrudPolicy:
           TableName:
             !Ref genConfTableName
+      - SQSPollerPolicy:
+          QueueName:
+            !Ref queueName
+      Events:
+        SQSEvent:
+        Type: SQS
+        Properties:
+          Queue: !Ref queueArn
+          BatchSize: 10
+          Enabled: true
 
 Outputs:
   GenConfTalksEtlFunction:
