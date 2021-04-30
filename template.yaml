@@ -3,15 +3,15 @@ Transform: AWS::Serverless-2016-10-31
 Description: SAM Template for gen-conf-talks-etl
 
 Parameters:
-  TOKEN_ENDPOINT:
+  tokenEndpoint:
     Type: String
-  CLIENT_SECRET:
+  clientSecret:
     Type: String
-  CLIENT_ID:
+  clientId:
     Type: String
-  CHURCH_API:
+  churchApi:
     Type: String
-  GEN_CONF_TABLE_NAME:
+  genConfTableName:
     Type: String
 
 Globals:
@@ -19,11 +19,11 @@ Globals:
     Timeout: 60
     Environment:
       Variables:
-        TOKEN_ENDPOINT: !Ref TOKEN_ENDPOINT
-        CLIENT_SECRET: !Ref CLIENT_SECRET
-        CLIENT_ID: !Ref CLIENT_ID
-        CHURCH_API: !Ref CHURCH_API
-        GEN_CONF_TABLE_NAME: !Ref GEN_CONF_TABLE_NAME
+        TOKEN_ENDPOINT: !Ref tokenEndpoint
+        CLIENT_SECRET: !Ref clientSecret
+        CLIENT_ID: !Ref clientId
+        CHURCH_API: !Ref churchApi
+        GEN_CONF_TABLE_NAME: !Ref genConfTableName
 
 Resources:
   GenConfTalksEtlFunction:
