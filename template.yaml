@@ -24,7 +24,6 @@ Globals:
         CLIENT_ID: !Ref CLIENT_ID
         CHURCH_API: !Ref CHURCH_API
         GEN_CONF_TABLE_NAME: !Ref GEN_CONF_TABLE_NAME
-        NODE_ENV: ''
 
 Resources:
   GenConfTalksEtlFunction:
