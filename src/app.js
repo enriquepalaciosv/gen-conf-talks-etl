@@ -1,5 +1,5 @@
 const axios = require('axios')
-const { getAccessToken, getManifest, getTalkByUri } = require('./services')
+const { getAccessToken, getManifest, getTalkByUri, saveOnDynamoDB } = require('./services')
 const { getSession, getTalkOrder, cleanUri, formatTitle, createSynonym, formatAuthor } = require('./util')
 
 
@@ -24,10 +24,11 @@ exports.lambdaHandler = async (event, context) => {
             uri: cleanUri(talk.uri),
             talkTitle: formatTitle(talk.title),
             talkTitleSynonym: createSynonym(talk.title),
-            author: formatAuthor(talk.author.name)
+            author: formatAuthor(talk.author.name),
+            source: 'GenConfContentPipeline'
         }
 
-        
+        await saveOnDynamoDB(talkObject);
 
         const response = {
             statusCode: 200,

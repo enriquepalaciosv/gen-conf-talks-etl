@@ -11,6 +11,8 @@ Parameters:
     Type: String
   CHURCH_API:
     Type: String
+  GEN_CONF_TABLE_NAME:
+    Type: String
 
 Globals:
   Function:
@@ -21,6 +23,8 @@ Globals:
         CLIENT_SECRET: !Ref CLIENT_SECRET
         CLIENT_ID: !Ref CLIENT_ID
         CHURCH_API: !Ref CHURCH_API
+        GEN_CONF_TABLE_NAME: !Ref GEN_CONF_TABLE_NAME
+        NODE_ENV: ''
 
 Resources:
   GenConfTalksEtlFunction:

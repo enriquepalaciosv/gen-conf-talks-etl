@@ -25,7 +25,7 @@ function cleanAndConvertToHttps(uri) {
 }
 
 function formatTitle(title) {
-    return title.replace(/[“”]/g, "").replace("—", " ");
+    return title.replace(/[“”]/g, "").replace("—", " ").replace(/[““””]/g, "");
 }
 
 function formatAuthor(author) {

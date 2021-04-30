@@ -14,6 +14,7 @@
     "start": "aws lambda invoke --function-name 'GenConfTalksEtlFunction' --endpoint-url 'http://127.0.0.1:3001' --no-verify-ssl out.txt"
   },
   "devDependencies": {
+    "aws-sdk": "^2.896.0",
     "chai": "^4.2.0",
     "mocha": "^8.2.1"
   }
