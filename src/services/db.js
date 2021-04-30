@@ -16,11 +16,13 @@ async function saveOnDynamoDB(talk) {
             Item: talk,
         };
 
+        const currentTalk = `${talk.talkTitle}, ${talk.author}, ${talk.date}`;
+
         await docClient.put(params, function (err, data) {
             if (err) {
                 console.error(
                     "Unable to add talk",
-                    `${talk.talkTitle}, ${talk.author}, ${talk.date}`,
+                    currentTalk,
                     ". Error JSON:",
                     JSON.stringify(err, null, 2)
                 );
@@ -28,10 +30,11 @@ async function saveOnDynamoDB(talk) {
             } else {
                 console.log(
                     "PutItem succeeded:",
-                    `${talk.talkTitle}, ${talk.author}, ${talk.date}`
+                    currentTalk
                 );
             }
         }).promise();
+        return currentTalk;
     } catch (err) {
         throw new Error(err)
     }

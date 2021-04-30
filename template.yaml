@@ -16,7 +16,7 @@ Parameters:
 
 Globals:
   Function:
-    Timeout: 60
+    Timeout: 120
     Environment:
       Variables:
         TOKEN_ENDPOINT: !Ref tokenEndpoint
