@@ -16,7 +16,7 @@ exports.lambdaHandler = async (event, context) => {
             const message = JSON.parse(body.Message)
             console.log('message', message);
             if (message.headers.event === "PUBLISH" && message.headers.context === "general-conference") {
-                uris.push(body.uri);
+                uris.push(message.uri);
             }
         }
 
