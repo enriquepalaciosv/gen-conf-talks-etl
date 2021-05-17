@@ -6,7 +6,7 @@ async function getAccessToken() {
         'client_id': process.env.CLIENT_ID,
         'client_secret': process.env.CLIENT_SECRET,
         'grant_type': 'client_credentials',
-        'scope': 'profile openid'
+        'scope': 'openid'
     });
     var config = {
         method: 'post',
