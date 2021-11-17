@@ -31,8 +31,8 @@ exports.lambdaHandler = async (event, context) => {
 
         // Old testament audios processing
         if (audios.length > 0) {
-            for (const audio of audios) {
-                const audio = await processAudio(audio);
+            for (const audioId of audios) {
+                const audio = await processAudio(audioId);
                 savedEntries.push(audio);
             }
         }

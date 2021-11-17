@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { getAccessToken, getManifest, getTalkByUri, saveOnDynamoDB } = require('../services')
+const { getAccessToken, getManifest, getTalkByUri, saveGenConfTalkOnDynamoDB } = require('../services')
 const { getSession, getTalkOrder, cleanUri, formatTitle, createSynonym, formatAuthor } = require('../util')
 
 async function getTalkByUri(uri) {
@@ -59,7 +59,7 @@ async function processTalk(uri, token) {
         source: 'GenConfContentPipeline'
     }
 
-    const dynamoResponse = await saveOnDynamoDB(talkObject);
+    const dynamoResponse = await saveGenConfTalkOnDynamoDB(talkObject);
     return dynamoResponse;
 }
 
