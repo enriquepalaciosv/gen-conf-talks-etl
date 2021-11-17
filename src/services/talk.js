@@ -1,8 +1,10 @@
 const axios = require('axios');
+const { getAccessToken, getManifest, getTalkByUri, saveOnDynamoDB } = require('../services')
+const { getSession, getTalkOrder, cleanUri, formatTitle, createSynonym, formatAuthor } = require('../util')
 
-async function getTalkByUri(uri, token) {
+async function getTalkByUri(uri) {
     try {
-
+        const token = await getAccessToken();
         const data = JSON.stringify({
             "$model": "ldsSource.general-conference",
             "$lang": "eng",
@@ -34,4 +36,34 @@ async function getTalkByUri(uri, token) {
 
 }
 
-exports.getTalkByUri = getTalkByUri;
+async function processTalk(uri, token) {
+    const talkResponse = await getTalkByUri(uri, token);
+    const talk = talkResponse.data.items[0];
+    const manifest = await getManifest(talk.year, talk.month, token);
+    const { sessionOrder, sessionName } = getSession(talk.uri, manifest);
+    const talkOrder = getTalkOrder(talk.uri, manifest);
+
+    const talkObject =
+    {
+        date: `${talk.year}-${talk.month}`,
+        year: talk.year,
+        month: talk.month,
+        audio: talk.audio.other,
+        session: sessionName,
+        sessionOrder,
+        talkOrder,
+        uri: cleanUri(talk.uri),
+        talkTitle: formatTitle(talk.title),
+        talkTitleSynonym: createSynonym(talk.title),
+        author: formatAuthor(talk.author.name),
+        source: 'GenConfContentPipeline'
+    }
+
+    const dynamoResponse = await saveOnDynamoDB(talkObject);
+    return dynamoResponse;
+}
+
+
+module.exports = {
+    getTalkByUri, processTalk
+};

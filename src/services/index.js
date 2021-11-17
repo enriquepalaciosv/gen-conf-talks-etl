@@ -1,8 +1,9 @@
 const { getAccessToken } = require('./token');
 const { getManifest } = require('./manifest');
-const { getTalkByUri } = require('./talk');
+const { getTalkByUri, processTalk } = require('./talk');
 const { saveOnDynamoDB } = require('./db');
+const { processAudio } = require('./audio');
 
 module.exports = {
-    getAccessToken, getManifest, getTalkByUri, saveOnDynamoDB
+    getAccessToken, getManifest, getTalkByUri, saveOnDynamoDB, processTalk, processAudio
 };

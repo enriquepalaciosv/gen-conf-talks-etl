@@ -1,14 +1,12 @@
-const axios = require('axios')
-const { getAccessToken, getManifest, getTalkByUri, saveOnDynamoDB } = require('./services')
-const { getSession, getTalkOrder, cleanUri, formatTitle, createSynonym, formatAuthor } = require('./util')
-
+const { processTalk, processAudio } = require('./services')
 
 exports.lambdaHandler = async (event, context) => {
     try {
         console.log('event', event);
         const { Records } = event;
-        const savedTalks = []
+        const savedEntries = []
         const uris = [];
+        const audios = [];
 
         for (const r of Records) {
             const body = JSON.parse(r.body);
@@ -18,19 +16,30 @@ exports.lambdaHandler = async (event, context) => {
             if (message.headers.event === "PUBLISH" && message.headers.context === "general-conference") {
                 uris.push(message.uri);
             }
+            if (message.headers.event === "PUBLISH" && message.headers.context === "audio-old-testament") {
+                audios.push(message.uri);
+            }
         }
 
+        // General conference talks processing
         if (uris.length > 0) {
-            const token = await getAccessToken();
             for (const uri of uris) {
-                const talk = await processTalk(uri, token)
-                savedTalks.push(talk);
+                const talk = await processTalk(uri)
+                savedEntries.push(talk);
+            }
+        }
+
+        // Old testament audios processing
+        if (audios.length > 0) {
+            for (const audio of audios) {
+                const audio = await processAudio(audio);
+                savedEntries.push(audio);
             }
         }
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ savedTalks })
+            body: JSON.stringify({ savedEntries })
         }
 
     } catch (err) {
@@ -41,29 +50,4 @@ exports.lambdaHandler = async (event, context) => {
 };
 
 
-async function processTalk(uri, token) {
-    const talkResponse = await getTalkByUri(uri, token);
-    const talk = talkResponse.data.items[0];
-    const manifest = await getManifest(talk.year, talk.month, token);
-    const { sessionOrder, sessionName } = getSession(talk.uri, manifest);
-    const talkOrder = getTalkOrder(talk.uri, manifest);
 
-    const talkObject =
-    {
-        date: `${talk.year}-${talk.month}`,
-        year: talk.year,
-        month: talk.month,
-        audio: talk.audio.other,
-        session: sessionName,
-        sessionOrder,
-        talkOrder,
-        uri: cleanUri(talk.uri),
-        talkTitle: formatTitle(talk.title),
-        talkTitleSynonym: createSynonym(talk.title),
-        author: formatAuthor(talk.author.name),
-        source: 'GenConfContentPipeline'
-    }
-
-    const dynamoResponse = await saveOnDynamoDB(talkObject);
-    return dynamoResponse;
-}
