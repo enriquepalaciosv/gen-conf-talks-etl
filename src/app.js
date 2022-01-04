@@ -1,5 +1,4 @@
 const { processTalk, processAudio } = require('./services')
-const { lambdaEvent } = require('../events/audioEvent')
 
 exports.lambdaHandler = async (event, context) => {
     try {
@@ -49,7 +48,3 @@ exports.lambdaHandler = async (event, context) => {
     }
 
 };
-
-
-exports.lambdaHandler(lambdaEvent);
-
