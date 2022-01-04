@@ -34,4 +34,4 @@ async function getManifest(year, month, token) {
 
 }
 
-exports.getManifest = getManifest;
+module.exports = { getManifest };

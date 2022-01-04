@@ -1,4 +1,5 @@
 const { processTalk, processAudio } = require('./services')
+const { lambdaEvent } = require('../events/audioEvent')
 
 exports.lambdaHandler = async (event, context) => {
     try {
@@ -16,7 +17,7 @@ exports.lambdaHandler = async (event, context) => {
             if (message.headers.event === "PUBLISH" && message.headers.context === "general-conference") {
                 uris.push(message.uri);
             }
-            if (message.headers.event === "PUBLISH" && message.headers.context === "audio-old-testament") {
+            if (message.headers.event === "PUBLISH" && message.headers.itemType === "AUDIO") {
                 audios.push(message.uri);
             }
         }
@@ -50,4 +51,5 @@ exports.lambdaHandler = async (event, context) => {
 };
 
 
+exports.lambdaHandler(lambdaEvent);
 

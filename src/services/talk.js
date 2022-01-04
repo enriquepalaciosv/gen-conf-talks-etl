@@ -1,5 +1,7 @@
 const axios = require('axios');
-const { getAccessToken, getManifest, getTalkByUri, saveGenConfTalkOnDynamoDB } = require('../services')
+const { getAccessToken } = require('./token')
+const { getManifest } = require('./manifest')
+const { saveGenConfTalkOnDynamoDB } = require('./db')
 const { getSession, getTalkOrder, cleanUri, formatTitle, createSynonym, formatAuthor } = require('../util')
 
 async function getTalkByUri(uri) {
@@ -20,7 +22,7 @@ async function getTalkByUri(uri) {
 
         const config = {
             method: 'post',
-            url: process.env.CHURCH_API,
+            url: `${process.env.CHURCH_API}/pub-svcs/content-service/v1/search`,
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
