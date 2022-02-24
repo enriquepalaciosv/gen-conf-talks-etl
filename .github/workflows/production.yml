@@ -21,4 +21,4 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
           AWS_DEPLOY_BUCKET: ${{ secrets.AWS_DEPLOY_BUCKET_PROD }}
-          PARAMETER_OVERRIDES: "tokenEndpoint=${{ secrets.TOKEN_ENDPOINT_PROD }} clientId=${{ secrets.CLIENT_ID_PROD }} churchApi=${{ secrets.CHURCH_API_PROD }} clientSecret=${{ secrets.CLIENT_SECRET_PROD }} genConfTableName=${{ secrets.GEN_CONF_TABLE_NAME }} versesTableName=${{ secrets.VERSES_TABLE_NAME }} queueName=${{ secrets.QUEUE_NAME_PROD }} queueArn=${{ secrets.QUEUE_ARN_PROD }}"
+          PARAMETER_OVERRIDES: "tokenEndpoint=${{ secrets.TOKEN_ENDPOINT_PROD }} clientId=${{ secrets.CLIENT_ID_PROD }} churchApi=${{ secrets.CHURCH_API_PROD }} clientSecret=${{ secrets.CLIENT_SECRET_PROD }} genConfTableName=${{ secrets.GEN_CONF_TABLE_NAME_PROD }} versesTableName=${{ secrets.VERSES_TABLE_NAME_PROD }} queueName=${{ secrets.QUEUE_NAME_PROD }} queueArn=${{ secrets.QUEUE_ARN_PROD }}"
