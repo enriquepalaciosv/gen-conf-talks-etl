@@ -17,7 +17,7 @@ exports.lambdaHandler = async (event, context) => {
                 uris.push(message.uri);
             }
             if (message.headers.event === "PUBLISH" && message.headers.itemType === "AUDIO") {
-                audios.push(message.uri);
+                audios.push(message.uri || message.id);
             }
         }
 
