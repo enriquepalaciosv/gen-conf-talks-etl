@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
-Description: SAM Template for gen-conf-talks-etl
+Description: SAM Template for lds-church-api-etl
 
 Parameters:
   tokenEndpoint:
@@ -33,7 +33,7 @@ Globals:
         VERSES_TABLE_NAME: !Ref versesTableName
 
 Resources:
-  GenConfTalksEtlFunction:
+  LdsChurchApiEtlFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: src/
@@ -53,9 +53,9 @@ Resources:
             Enabled: true
 
 Outputs:
-  GenConfTalksEtlFunction:
-    Description: "Gen Conf ETL Lambda Function ARN"
-    Value: !GetAtt GenConfTalksEtlFunction.Arn
-  GenConfTalksEtlFunctionIamRole:
+  LdsChurchApiEtlFunction:
+    Description: "LDS church API ETL Lambda Function ARN"
+    Value: !GetAtt LdsChurchApiEtlFunction.Arn
+  LdsChurchApiEtlFunctionIamRole:
     Description: "Implicit IAM Role created for the function"
-    Value: !GetAtt GenConfTalksEtlFunctionRole.Arn
+    Value: !GetAtt LdsChurchApiEtlFunctionRole.Arn
